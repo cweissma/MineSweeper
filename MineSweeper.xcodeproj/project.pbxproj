@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D2A12A8C20842EC100010433 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2A12A8B20842EC100010433 /* main.cpp */; };
+		D2A12A8C20842EC100010433 /* minesweeper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2A12A8B20842EC100010433 /* minesweeper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		D2A12A8820842EC100010433 /* MineSweeper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MineSweeper; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2A12A8B20842EC100010433 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D2A12A8B20842EC100010433 /* minesweeper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = minesweeper.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 		D2A12A7F20842EC100010433 = {
 			isa = PBXGroup;
 			children = (
-				D2A12A8A20842EC100010433 /* MineSweeper */,
+				D2A12A8B20842EC100010433 /* minesweeper.cpp */,
 				D2A12A8920842EC100010433 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +52,6 @@
 				D2A12A8820842EC100010433 /* MineSweeper */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D2A12A8A20842EC100010433 /* MineSweeper */ = {
-			isa = PBXGroup;
-			children = (
-				D2A12A8B20842EC100010433 /* main.cpp */,
-			);
-			path = MineSweeper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2A12A8C20842EC100010433 /* main.cpp in Sources */,
+				D2A12A8C20842EC100010433 /* minesweeper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
