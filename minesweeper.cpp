@@ -15,12 +15,12 @@ using namespace std;
 
 //--Functions
 int GetBoardSize(int x);
-int SetupBoard(int BoardSize);
+int SetupInitialBoard(int BoardSize);
 int OutputBoard(int BoardSize);
 
 //--Variables
 int BoardSize = 1;
-int Board[10][10];
+char Board[10][10];
 
 //************************************
 //************ Main ******************
@@ -28,9 +28,10 @@ int Board[10][10];
 
 int main() {
     BoardSize = GetBoardSize(BoardSize);
-    SetupBoard(BoardSize);
+    SetupInitialBoard(BoardSize);
+    
     OutputBoard(BoardSize);
-    cout << "back to main" << endl;
+    cout << endl << "Thank you for Playing" << endl << endl;
 }
 
 //************************************
@@ -38,18 +39,17 @@ int main() {
 //************************************
 
 int GetBoardSize(int x) {
-    cout << "Please Enter Board Size";
+    cout << "Please Enter Board Size: ";
     cin >> x;
     return x;
 }
 
-int SetupBoard(int x) {
-    int iterator = 1;
+int SetupInitialBoard(int x) {
+    int cummulator = 1;
     for (int i = 1; i <= x; i++){
         for (int j = 1; j <= x; j++){
-            Board[i][j] = iterator;
-            cout << "Inner Loop:--:" << i  << " and " << j << " value= " << Board[i][j] << endl ;
-            iterator = iterator + 1;
+            Board[i][j] = cummulator + '0';
+            ++ cummulator;
         }
     }
     return 0;
@@ -59,10 +59,11 @@ int OutputBoard(int y) {
     cout << endl << "OutputBoard:" << endl ;
     int kmax = y,lmax = y;
     for (int k = 1; k <= kmax; k++){
+        cout << " | ";
         for (int l = 1; l <= lmax; l++){
-            cout << setfill('0') << setw(2) << Board[k][l] << " - ";
+            cout << Board[k][l] << " | ";
         }
-        cout << endl << endl;
+        cout << endl ;
         
     }
     return 0;
