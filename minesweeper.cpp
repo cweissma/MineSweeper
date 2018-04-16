@@ -15,11 +15,12 @@ using namespace std;
 
 //--Functions
 int GetBoardSize(int x);
-int SetupInitialBoard(int BoardSize);
+int SetupInitialBoard(int BoardSize, int BombSize);
 int OutputBoard(int BoardSize);
 
 //--Variables
 int BoardSize = 1;
+int BombSize = 1;
 char Board[10][10];
 
 //************************************
@@ -28,7 +29,8 @@ char Board[10][10];
 
 int main() {
     BoardSize = GetBoardSize(BoardSize);
-    SetupInitialBoard(BoardSize);
+    BombSize = BoardSize / 3;
+    SetupInitialBoard(BoardSize,BombSize);
     
     OutputBoard(BoardSize);
     cout << endl << "Thank you for Playing" << endl << endl;
@@ -39,13 +41,14 @@ int main() {
 //************************************
 
 int GetBoardSize(int x) {
-    cout << "Please Enter Board Size: ";
-    cin >> x;
+    // cout << "Please Enter Board Size: "; cin >> x;
+    x = 8;
     return x;
 }
 
-int SetupInitialBoard(int x) {
+int SetupInitialBoard(int x, int y) {
     int cummulator = 1;
+    
     for (int i = 1; i <= x; i++){
         for (int j = 1; j <= x; j++){
             Board[i][j] = cummulator + '0';
