@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <ctime>
+#include <cstdlib>
 //#include <vector>
 using namespace std;
 
@@ -14,61 +16,86 @@ using namespace std;
 //************************************
 
 //--Functions
-int GetBoardSize(int x);
-int SetupInitialBoard(int BoardSize, int BombSize);
+int GetBoardSize(int x, int y);
+int SetupInitialBoards(int BoardDim);
 int OutputBoard(int BoardSize);
+int PlantMines();
 
 //--Variables
-int BoardSize = 1;
-int BombSize = 1;
-char Board[10][10];
+char PrivateBoard[8][8];
+char PublicBoard[8][8];
+char MineField[64];
+int BoardDim=8;
+int BoardSize = BoardDim * BoardDim;
+int MineSize=21;
+
+
 
 //************************************
 //************ Main ******************
 //************************************
 
 int main() {
-    BoardSize = GetBoardSize(BoardSize);
-    BombSize = BoardSize / 3;
-    SetupInitialBoard(BoardSize,BombSize);
+    cout << "BoardDim: " << BoardDim << " x " << BoardDim << endl << "# of Mines: " << MineSize << endl;
+    SetupInitialBoards(BoardDim);
     
-    OutputBoard(BoardSize);
+    OutputBoard(BoardDim);
+    PlantMines();
+    
+    
+    //end of program
     cout << endl << "Thank you for Playing" << endl << endl;
+    return 0;
 }
 
 //************************************
 //************ Functions *************
 //************************************
 
-int GetBoardSize(int x) {
-    // cout << "Please Enter Board Size: "; cin >> x;
-    x = 8;
-    return x;
-}
 
-int SetupInitialBoard(int x, int y) {
-    int cummulator = 1;
-    
-    for (int i = 1; i <= x; i++){
-        for (int j = 1; j <= x; j++){
-            Board[i][j] = cummulator + '0';
-            ++ cummulator;
+int SetupInitialBoards(int x) {
+    //Public board first
+    int PublicKey = 1;
+    for (int i = 0; i <= x-1; i++){
+        for (int j = 0; j <= x-1; j++){
+            PublicBoard[i][j] = '-';
+            ++ PublicKey;
         }
     }
+    //Private board next
+    int PrivateKey = 1;
+    for (int k = 0; k <= x-1; k++){
+        for (int l = 0; l <= x-1; l++){
+            PrivateBoard[k][l] = '-';
+            ++ PrivateKey;
+        }
+    }
+    
     return 0;
 }
 
 int OutputBoard(int y) {
-    cout << endl << "OutputBoard:" << endl ;
-    int kmax = y,lmax = y;
-    for (int k = 1; k <= kmax; k++){
-        cout << " | ";
-        for (int l = 1; l <= lmax; l++){
-            cout << Board[k][l] << " | ";
+    cout << endl << "OutputPublicBoard:" << endl << endl ;
+    cout << "  0 1 2 3 4 5 6 7" << endl;
+    for (int k = 0; k <= y-1; k++){
+        cout << k << " ";
+        for (int l = 0; l <= y-1; l++){
+            cout << PublicBoard[k][l]; // output cell contents
+            cout << " ";
         }
         cout << endl ;
         
     }
     return 0;
 }
+int PlantMines(){
+    srand( static_cast<unsigned int>(time(NULL))); //set a random seed
+    for (int m = 0; m <= MineSize-1; m++){
+        int PlaceMineAt = rand() % (BoardSize);
+        MineField[PlaceMineAt] = 'X';
+    }
+
+   return 0;
+}
+
 //end
