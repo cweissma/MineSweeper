@@ -8,7 +8,6 @@
 #include <iomanip>
 #include <ctime>
 #include <cstdlib>
-//#include <vector>
 using namespace std;
 
 //************************************
@@ -21,6 +20,7 @@ int SetupInitialBoards(int BoardDim);
 int OutputBoard(int BoardSize);
 int PlantMines();
 int MakeAMove();
+int ProcessMove();
 
 //--Variables
 char PrivateBoard[8][8];
@@ -47,6 +47,7 @@ int main() {
     
     MakeAMove();
     
+    ProcessMove();
     
     //end of program
     cout << endl << "Thank you for Playing" << endl << endl;
@@ -100,8 +101,8 @@ int PlantMines(){
         int PlaceMineAt = rand() % (BoardSize);
         MineField[PlaceMineAt] = 'X';
     }
-
-   return 0;
+    
+    return 0;
 }
 
 int MakeAMove(){
@@ -109,11 +110,19 @@ int MakeAMove(){
     cin >> xMove;
     cout << "Make A Move (y - then enter)";
     cin >> yMove;
-    cout << "you chose x:" << xMove << "and y:" << yMove << endl;
-    char waitforit;
+    cout << "you chose x:" << xMove << "and y: " << yMove << endl;
     cout << "Press q to quit";
+    char waitforit;
     cin >> waitforit;
     return 0;
 }
 
+int ProcessMove(){
+    return 0;
+    
+}
+
+
+//
 //end
+//
