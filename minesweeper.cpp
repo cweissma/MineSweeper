@@ -17,7 +17,7 @@ using namespace std;
 //--Functions
 int GetBoardSize(int x, int y);
 int SetupInitialBoards(int BoardDim);
-int OutputBoard(int BoardSize);
+int OutputBoard();
 int PlantMines();
 int MakeAMove();
 int ProcessMove();
@@ -43,14 +43,14 @@ int main() {
     cout << "BoardDim: " << BoardDim << " x " << BoardDim << endl << "# of Mines: " << MineSize << endl;
     SetupInitialBoards(BoardDim);
     
-    OutputBoard(BoardDim);
+    OutputBoard();
     PlantMines();
     enum Status {Active, Won, Lost};
     Status Alive = Active;
     switch(Alive) {
-        case Active  : cout << "Active" << endl;   break;
-        case Won : std::cout << "Won\n"; break;
-        case Lost : std::cout << "Lost\n";  break;
+        case Active  : cout << "Your Status is - Active" << endl << endl;  break;
+        case Won : std::cout << "You Won :-) \n"; break;
+        case Lost : std::cout << "You Lost :-( t\n";  break;
     }
 
     MakeAMove();
@@ -87,20 +87,7 @@ int SetupInitialBoards(int x) {
     return 0;
 }
 
-int OutputBoard(int y) {
-    cout << endl << "OutputPublicBoard:" << endl << endl ;
-    cout << "  0 1 2 3 4 5 6 7" << endl;
-    for (int k = 0; k <= y-1; k++){
-        cout << k << " ";
-        for (int l = 0; l <= y-1; l++){
-            cout << PublicBoard[k][l]; // output cell contents
-            cout << " ";
-        }
-        cout << endl ;
-        
-    }
-    return 0;
-}
+
 
 int PlantMines(){
     srand( static_cast<unsigned int>(time(NULL))); //set a random seed
@@ -112,25 +99,42 @@ int PlantMines(){
     return 0;
 }
 
+
 int MakeAMove(){
     cout << "Make A Move (x - then enter)";
     cin >> xMove;
     cout << "Make A Move (y - then enter)";
     cin >> yMove;
-    cout << "Press q to quit";
+/*    cout << "Press q to quit";
     char waitforit;
-    cin >> waitforit;
+    cin >> waitforit; */
     return 0;
 }
 
+    
 int ProcessMove(){
     cout << "you chose x:" << xMove << "and y: " << yMove << endl;
     PublicBoard[xMove][yMove] = '#';
+    OutputBoard();
     
     return 0;
     
 }
 
+int OutputBoard() {
+    cout << endl << "OutputPublicBoard:" << endl << endl ;
+    cout << "  0 1 2 3 4 5 6 7" << endl;
+    for (int k = 0; k <= BoardDim-1; k++){
+        cout << k << " ";
+        for (int l = 0; l <= BoardDim-1; l++){
+            cout << PublicBoard[k][l]; // output cell contents
+            cout << " ";
+        }
+        cout << endl ;
+        
+    }
+    return 0;
+}
 
 //
 //end
