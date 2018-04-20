@@ -34,6 +34,7 @@ int yMove=0;
 
 
 
+
 //************************************
 //************ Main ******************
 //************************************
@@ -44,9 +45,15 @@ int main() {
     
     OutputBoard(BoardDim);
     PlantMines();
-    
+    enum Status {Active, Won, Lost};
+    Status Alive = Active;
+    switch(Alive) {
+        case Active  : cout << "Active" << endl;   break;
+        case Won : std::cout << "Won\n"; break;
+        case Lost : std::cout << "Lost\n";  break;
+    }
+
     MakeAMove();
-    
     ProcessMove();
     
     //end of program
@@ -110,7 +117,6 @@ int MakeAMove(){
     cin >> xMove;
     cout << "Make A Move (y - then enter)";
     cin >> yMove;
-    cout << "you chose x:" << xMove << "and y: " << yMove << endl;
     cout << "Press q to quit";
     char waitforit;
     cin >> waitforit;
@@ -118,6 +124,9 @@ int MakeAMove(){
 }
 
 int ProcessMove(){
+    cout << "you chose x:" << xMove << "and y: " << yMove << endl;
+    PublicBoard[xMove][yMove] = '#';
+    
     return 0;
     
 }
