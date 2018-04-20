@@ -20,6 +20,7 @@ int GetBoardSize(int x, int y);
 int SetupInitialBoards(int BoardDim);
 int OutputBoard(int BoardSize);
 int PlantMines();
+int MakeAMove();
 
 //--Variables
 char PrivateBoard[8][8];
@@ -28,6 +29,8 @@ char MineField[64];
 int BoardDim=8;
 int BoardSize = BoardDim * BoardDim;
 int MineSize=21;
+int xMove=0;
+int yMove=0;
 
 
 
@@ -41,6 +44,8 @@ int main() {
     
     OutputBoard(BoardDim);
     PlantMines();
+    
+    MakeAMove();
     
     
     //end of program
@@ -88,6 +93,7 @@ int OutputBoard(int y) {
     }
     return 0;
 }
+
 int PlantMines(){
     srand( static_cast<unsigned int>(time(NULL))); //set a random seed
     for (int m = 0; m <= MineSize-1; m++){
@@ -96,6 +102,18 @@ int PlantMines(){
     }
 
    return 0;
+}
+
+int MakeAMove(){
+    cout << "Make A Move (x - then enter)";
+    cin >> xMove;
+    cout << "Make A Move (y - then enter)";
+    cin >> yMove;
+    cout << "you chose x:" << xMove << "and y:" << yMove << endl;
+    char waitforit;
+    cout << "Press q to quit";
+    cin >> waitforit;
+    return 0;
 }
 
 //end
