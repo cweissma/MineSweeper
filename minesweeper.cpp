@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <ctime>
 #include <cstdlib>
+
 using namespace std;
 
 //************************************
@@ -36,6 +37,7 @@ int NumOfMines=21;
 bool StillPlaying = true;
 int xMove=0;
 int yMove=0;
+int NeighbourMines=0;
 
 //************************************
 //************ Functions *************
@@ -159,16 +161,40 @@ int ProcessMove(){
     }
     else {
         ProcessAdjacencies(xMove,yMove);
-            //  PublicBoard[xMove][yMove] = '#';
-            // pick up from here
+
     }
     return 0;
     
 }
 
 int ProcessAdjacencies(int x, int y){
-    //north
+    NeighbourMines=0;
+    //Run counterclockwise around the chosen cell and calculate the number of adjacent mines
     
+    //case 1: North x-1 and y
+    if (x >= 0){
+        if (PrivateBoard[x-1][y]=='X'){
+            NeighbourMines++;
+        }
+    }
+    //case 2: NorthWest x-1 and y-1
+    if (x >= 0 && y >=0){
+        if (PrivateBoard[x-1][y-1]=='X'){
+            NeighbourMines++;
+        }
+    }
+    //case 3: West x-1 and y-1
+    if (x >= 0 && y >=0){
+        if (PrivateBoard[x-1][y-1]=='X'){
+            NeighbourMines++;
+        }
+    }
+
+    
+    cout << "you have " << NeighbourMines << " Mines nearby - watch out" << endl;
+    char NumberOfMines = NeighbourMines+'0';
+    PublicBoard[x][y]=NumberOfMines;
+   
     return 0;
 }
 
@@ -181,7 +207,7 @@ int main() {
     cout << "BoardDim: " << BoardDim << " x " << BoardDim << endl << "# of Mines: " << NumOfMines << endl;
     SetupInitialBoards(BoardDim);
     PlantMines();
-    //OutputPrivateBoard(); //uncomment for debugging or cheating
+    OutputPrivateBoard(); //uncomment for debugging or cheating
     
     StillPlaying = true;
     OutputStatus(StillPlaying);
