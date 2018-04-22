@@ -153,10 +153,13 @@ void OutputStatus(bool here) {
 }
 
 int ProcessMove(){
-    cout << "you chose x:" << xMove << "and y: " << yMove << endl;
+    cout << "you chose x: " << xMove << " and y: " << yMove << endl;
     if (PrivateBoard[xMove][yMove] == 'X'){
+        cout << endl;
+        cout << "********************" << endl;
         cout << "Mine Found at " << xMove << "," << yMove << "!" << endl;
         cout << "YOU LOSE!" << endl;
+        cout << "********************" << endl << endl;
         StillPlaying = false;
     }
     else {
@@ -172,24 +175,53 @@ int ProcessAdjacencies(int x, int y){
     //Run counterclockwise around the chosen cell and calculate the number of adjacent mines
     
     //case 1: North x-1 and y
-    if (x >= 0){
+    if (x > 0){
         if (PrivateBoard[x-1][y]=='X'){
             NeighbourMines++;
         }
     }
     //case 2: NorthWest x-1 and y-1
-    if (x >= 0 && y >=0){
+    if (x > 0 && y > 0){
         if (PrivateBoard[x-1][y-1]=='X'){
             NeighbourMines++;
         }
     }
-    //case 3: West x-1 and y-1
-    if (x >= 0 && y >=0){
-        if (PrivateBoard[x-1][y-1]=='X'){
+    //case 3: West x and y-1
+    if (x > 0){
+        if (PrivateBoard[x][y-1]=='X'){
             NeighbourMines++;
         }
     }
-
+    //case 4: SouthWest x+1 and y-1
+    if (x < 7 && y > 0){
+        if (PrivateBoard[x+1][y-1]=='X'){
+            NeighbourMines++;
+        }
+    }
+    //case 5: South x+1 and y
+    if (x < 7 ){
+        if (PrivateBoard[x+1][y]=='X'){
+            NeighbourMines++;
+        }
+    }
+    //case 6: SouthEast x+1 and y+1
+    if (x < 7 && y < 7){
+        if (PrivateBoard[x+1][y+1]=='X'){
+            NeighbourMines++;
+        }
+    }
+    //case 7: East x and y+1
+    if (y < 7){
+        if (PrivateBoard[x][y+1]=='X'){
+            NeighbourMines++;
+        }
+    }
+    //case 8: NorthEast x+1 and y+1
+    if (y < 7){
+        if (PrivateBoard[x-1][y+1]=='X'){
+            NeighbourMines++;
+        }
+    }
     
     cout << "you have " << NeighbourMines << " Mines nearby - watch out" << endl;
     char NumberOfMines = NeighbourMines+'0';
