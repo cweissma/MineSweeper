@@ -24,6 +24,7 @@ int MakeAMove();
 int ProcessMove();
 int PressEnter();
 void OutputStatus(bool here);
+int ProcessAdjacencies(int xMove, int yMove);
 
 //--Declare Variables
 char PrivateBoard[8][8];
@@ -157,11 +158,20 @@ int ProcessMove(){
         StillPlaying = false;
     }
     else {
-        PublicBoard[xMove][yMove] = '#';
+        ProcessAdjacencies(xMove,yMove);
+            //  PublicBoard[xMove][yMove] = '#';
+            // pick up from here
     }
     return 0;
     
 }
+
+int ProcessAdjacencies(int x, int y){
+    //north
+    
+    return 0;
+}
+
 
 //************************************
 //************ Main ******************
@@ -171,7 +181,7 @@ int main() {
     cout << "BoardDim: " << BoardDim << " x " << BoardDim << endl << "# of Mines: " << NumOfMines << endl;
     SetupInitialBoards(BoardDim);
     PlantMines();
-    OutputPrivateBoard();
+    //OutputPrivateBoard(); //uncomment for debugging or cheating
     
     StillPlaying = true;
     OutputStatus(StillPlaying);
@@ -180,7 +190,6 @@ int main() {
         OutputPublicBoard();
         MakeAMove();
         ProcessMove();
-        //OutputStatus(StillPlaying);
     }
     PressEnter();
     
