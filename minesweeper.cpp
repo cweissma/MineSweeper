@@ -152,7 +152,7 @@ void OutputStatus(bool here) {
 int ProcessMove(){
     cout << "you chose x:" << xMove << "and y: " << yMove << endl;
     if (PrivateBoard[xMove][yMove] == 'X'){
-        cout << "Bomb Found at " << xMove << "," << yMove << "!" << endl;
+        cout << "Mine Found at " << xMove << "," << yMove << "!" << endl;
         cout << "YOU LOSE!" << endl;
         StillPlaying = false;
     }
