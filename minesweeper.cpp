@@ -43,7 +43,6 @@ int NeighbourMines=0;
 //************ Functions *************
 //************************************
 
-
 int SetupInitialBoards(int x) {
     //Public board first
     int PublicKey = 1;
@@ -64,8 +63,6 @@ int SetupInitialBoards(int x) {
     
     return 0;
 }
-
-
 
 int PlantMines(){
     srand( static_cast<unsigned int>(time(NULL))); //set a random seed
@@ -94,12 +91,29 @@ int PlantMines(){
     return 0;
 }
 
-
 int MakeAMove(){
-    cout << "Make A Move (x - then enter)";
-    cin >> xMove;
-    cout << "Make A Move (y - then enter)";
-    cin >> yMove;
+    bool ValidXMove = false;
+    while (!ValidXMove){
+        cout << "Make A Move (x - then enter): ";
+        cin >> xMove;
+        if (xMove < 0 || xMove > 7) {
+            cout << "Invalid Move, try again: " << endl;
+        }
+        else {
+                ValidXMove = true;
+        }
+    }
+    bool ValidYMove = false;
+    while (!ValidYMove){
+        cout << "Make A Move (y - then enter): ";
+        cin >> yMove;
+        if (yMove < 0 || yMove > 7) {
+            cout << "Invalid Move, try again: " << endl;
+        }
+        else {
+            ValidYMove = true;
+        }
+    }
     return 0;
 }
 
