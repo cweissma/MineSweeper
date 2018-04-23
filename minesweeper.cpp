@@ -76,7 +76,7 @@ int PlantMines(){
     for (int m = 0; m <= NumOfMines-1; m++){
         int PlaceMineAt = rand() % (BoardSize);
         MineField[PlaceMineAt] = 'X';
-        cout << PlaceMineAt << " " ;
+        // cout << PlaceMineAt << " " ; //uncomment for debugging
     }
     cout << endl;
     int PrivateKey = 0;
