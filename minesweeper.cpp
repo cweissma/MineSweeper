@@ -273,7 +273,7 @@ int ProcessAdjacencies(int x, int y){
 int main() {
     SetupInitialBoards(BoardDim);
     PlantMines();
-    OutputPrivateBoard(); //uncomment for debugging or cheating
+    //OutputPrivateBoard(); //uncomment for debugging or cheating
     
     StillPlaying = true;
     OutputStatus(StillPlaying);
