@@ -26,24 +26,30 @@ int ProcessMove();
 int PressEnter();
 void OutputStatus(bool here);
 int ProcessAdjacencies(int xMove, int yMove);
+int Winner();
 
 //--Declare Variables
-char PrivateBoard[8][8];
-char PublicBoard[8][8];
-char MineField[64];
-int BoardDim=8;
+int BoardDim=8; //static size of the playing field
+char PrivateBoard[8][8]; //board for keeping track of mines
+char PublicBoard[8][8]; // board for the player to see
+char MineField[64]; //total number of cells (8x8)
 int BoardSize = BoardDim * BoardDim;
-int NumOfMines=21;
+int NumOfMines=21; //for a board of 8x8, an average difficulty
+int NumOfSafeSpaces= BoardSize-NumOfMines; //64 - 21 = number of safe spaces
 bool StillPlaying = true;
 int xMove=0;
 int yMove=0;
+int MoveNumber=0;
 int NeighbourMines=0;
+
 
 //************************************
 //************ Functions *************
 //************************************
 
+// this will set up the boards and put dashes in the public board and private board
 int SetupInitialBoards(int x) {
+     cout << "BoardDim: " << BoardDim << " x " << BoardDim << endl << "# of Mines: " << NumOfMines << endl;
     //Public board first
     int PublicKey = 1;
     for (int i = 0; i <= x-1; i++){
@@ -64,6 +70,7 @@ int SetupInitialBoards(int x) {
     return 0;
 }
 
+// this will create an array of 64, randomly place mines, and then loop through the private board placing mines
 int PlantMines(){
     srand( static_cast<unsigned int>(time(NULL))); //set a random seed
     for (int m = 0; m <= NumOfMines-1; m++){
@@ -75,15 +82,9 @@ int PlantMines(){
     int PrivateKey = 0;
     for (int k = 0; k <= BoardDim-1; k++){
             for (int l = 0; l <= BoardDim-1; l++){
-                /* used for debug
-                cout << PrivateKey << ": " << k << "," << l << endl;
-                */
+
                 if (MineField[PrivateKey] == 'X'){
                     PrivateBoard[k][l] = 'X';
-                    /* used for debug
-                    cout << "Mine Position: " << PrivateKey << endl;
-                    cout << "Mine Placed at: " << k << "." << l << endl;
-                    */
                  }
                 ++PrivateKey;
             }
@@ -91,8 +92,10 @@ int PlantMines(){
     return 0;
 }
 
+//this accepts an x,y input from the player and validate that x and y are between 0 and 7
 int MakeAMove(){
     bool ValidXMove = false;
+    bool ValidYMove = false;
     while (!ValidXMove){
         cout << "Make A Move (x - then enter): ";
         cin >> xMove;
@@ -100,15 +103,18 @@ int MakeAMove(){
             cout << "Invalid Move, try again: " << endl;
         }
         else {
-                ValidXMove = true;
+            ValidXMove = true;
         }
     }
-    bool ValidYMove = false;
+    // check that Y is valid, also check that the space wasnt used before by checking if it has a number (not a '-')
     while (!ValidYMove){
         cout << "Make A Move (y - then enter): ";
         cin >> yMove;
         if (yMove < 0 || yMove > 7) {
-            cout << "Invalid Move, try again: " << endl;
+            cout << "Invalid Move, outside of range (0-7)! Try again: " << endl;
+        }
+        if (PublicBoard[xMove][yMove] != '-') {
+            cout << "Invalid Move, space already used! Try again: " << endl;
         }
         else {
             ValidYMove = true;
@@ -117,9 +123,9 @@ int MakeAMove(){
     return 0;
 }
 
-
+//this will output the players board
 int OutputPublicBoard() {
-    cout << endl << "Public Board:" << endl << endl ;
+    cout << endl << "Public Board: Move Number: " << MoveNumber << " " << endl << endl;
     cout << "  0 1 2 3 4 5 6 7" << endl;
     for (int k = 0; k <= BoardDim-1; k++){
         cout << k << " ";
@@ -134,7 +140,7 @@ int OutputPublicBoard() {
     return 0;
 }
 
-// used for debug and test
+// used for debug and test - and cheating. to remove, comment out the call to it in main()
 int OutputPrivateBoard() {
     cout << endl << "Private Board:" << endl << endl ;
     cout << "  0 1 2 3 4 5 6 7" << endl;
@@ -150,13 +156,15 @@ int OutputPrivateBoard() {
     return 0;
 }
 
+//simple function to wait for the users input
 int PressEnter() {
-    cout << "Press q then Enter to quit";
+    cout << "Press q then Enter to quit" ; // it's a lie. you can press any letter to quit
     char waitforit;
     cin >> waitforit;
     return 0;
 }
 
+// shows your status
 void OutputStatus(bool here) {
     if (here == true) {
         cout << "STILL PLAYING" << endl;
@@ -166,6 +174,18 @@ void OutputStatus(bool here) {
     }
 }
 
+// process here if you are a winner
+int Winner() {
+    cout << endl;
+    cout << "********************" << endl;
+    cout << "YOU WIN! YOU AVIODED ALL THE MINES!" << endl;
+    cout << "NICE JOB!" << endl;
+    cout << "********************" << endl << endl;
+    StillPlaying = false;
+    return 0;
+}
+
+//take the input from the player and checks for a mine in that position. if not, call the function to process adjacencies
 int ProcessMove(){
     cout << "you chose x: " << xMove << " and y: " << yMove << endl;
     if (PrivateBoard[xMove][yMove] == 'X'){
@@ -184,6 +204,8 @@ int ProcessMove(){
     
 }
 
+// go through each of the 8 adjacencies and count the number of neighbours with mines
+// then place that number back into the public board
 int ProcessAdjacencies(int x, int y){
     NeighbourMines=0;
     //Run counterclockwise around the chosen cell and calculate the number of adjacent mines
@@ -236,11 +258,10 @@ int ProcessAdjacencies(int x, int y){
             NeighbourMines++;
         }
     }
-    
+    //write out the number of mines to the chosen cell in the public board
     cout << "you have " << NeighbourMines << " Mines nearby - watch out" << endl;
     char NumberOfMines = NeighbourMines+'0';
     PublicBoard[x][y]=NumberOfMines;
-   
     return 0;
 }
 
@@ -250,7 +271,6 @@ int ProcessAdjacencies(int x, int y){
 //************************************
 
 int main() {
-    cout << "BoardDim: " << BoardDim << " x " << BoardDim << endl << "# of Mines: " << NumOfMines << endl;
     SetupInitialBoards(BoardDim);
     PlantMines();
     OutputPrivateBoard(); //uncomment for debugging or cheating
@@ -258,20 +278,21 @@ int main() {
     StillPlaying = true;
     OutputStatus(StillPlaying);
     
-    while (StillPlaying) {
+    while (StillPlaying && MoveNumber < NumOfSafeSpaces) {
         OutputPublicBoard();
         MakeAMove();
         ProcessMove();
+        MoveNumber++;
     }
+    if (MoveNumber == NumOfSafeSpaces){
+        Winner();
+    }
+  
     PressEnter();
-    
-
     
     //end of program
     cout << endl << "Thank you for Playing" << endl << endl;
     return 0;
 }
+// the end
 
-//
-//end
-//
